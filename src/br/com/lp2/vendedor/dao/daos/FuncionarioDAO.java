@@ -26,7 +26,7 @@ public class FuncionarioDAO extends Repositorio {
 			writer.write(montaRegistro(func));
 			writer.newLine();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 	}
@@ -44,11 +44,11 @@ public class FuncionarioDAO extends Repositorio {
 						TipoCargo.valueOf(conteudo[2].toUpperCase()), conteudo[3], conteudo[4]));
 
 			}
-			
+
 			return allFuncs;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}
@@ -68,7 +68,7 @@ public class FuncionarioDAO extends Repositorio {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 		return null;
@@ -89,7 +89,7 @@ public class FuncionarioDAO extends Repositorio {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 		return null;
@@ -125,15 +125,18 @@ public class FuncionarioDAO extends Repositorio {
 				for (String linha : allLines) {
 					String[] conteudo = new String[5];
 					conteudo = linha.split("\\|");
+					Funcionario fLinha = null;
+					if (!conteudo[0].equals("")) {
 
-					Funcionario fLinha = new Funcionario(Integer.parseInt(conteudo[0]), conteudo[1],
-							TipoCargo.valueOf(conteudo[2].toUpperCase()), conteudo[3], conteudo[4]);
+						fLinha = new Funcionario(Integer.parseInt(conteudo[0]), conteudo[1],
+								TipoCargo.valueOf(conteudo[2].toUpperCase()), conteudo[3], conteudo[4]);
 
-					if (fLinha.getId() == fBanco.getId()) {
-						fNovosDados.setId(fBanco.getId());
-						escreverDeVolta.add(montaRegistro(fNovosDados));
-					} else {
-						escreverDeVolta.add(montaRegistro(fLinha));
+						if (fLinha.getId() == fBanco.getId()) {
+							fNovosDados.setId(fBanco.getId());
+							escreverDeVolta.add(montaRegistro(fNovosDados));
+						} else {
+							escreverDeVolta.add(montaRegistro(fLinha));
+						}
 					}
 				}
 
@@ -146,7 +149,7 @@ public class FuncionarioDAO extends Repositorio {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Nao existe usuario");

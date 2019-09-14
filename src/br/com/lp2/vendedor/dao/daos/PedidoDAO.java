@@ -32,7 +32,7 @@ public class PedidoDAO extends Repositorio {
 			writer.write(montaRegistro(pedido));
 			writer.newLine();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -45,19 +45,13 @@ public class PedidoDAO extends Repositorio {
 			writer.write(montaRegistro(pedido));
 			writer.newLine();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * id, nome private Timestamp dataAbertura; private List<Produto> listaProdutos;
-	 * private Cliente cliente; private Funcionario funcionario;
-	 * 
-	 */
-	
 	@Override
 	public List<Object> SelecionaTodos() {
-		//TODO
+		// TODO
 		return null;
 	}
 
@@ -66,17 +60,18 @@ public class PedidoDAO extends Repositorio {
 
 		Pedido pedido = new Pedido();
 		boolean iniciaObjeto = true;
-
+		pedido.setListaProdutos(new ArrayList<Produto>());
 		try {
 			List<String> allLines = getTextFromTable(tablePath);
 			for (String linha : allLines) {
 				String[] conteudo = linha.split("\\|");
 
-				if (Integer.parseInt(conteudo[0]) == (id)) {
+				if (conteudo[0].equals("")) {
+				} else if (Integer.parseInt(conteudo[0]) == (id)) {
 					if (iniciaObjeto) {
 						pedido.setId(Integer.parseInt(conteudo[0]));
 						pedido.setNome(conteudo[1]);
-						pedido.setDataAbertura(stringToTimestamp(conteudo[2]));
+						pedido.setDataAbertura(conteudo[2]);
 						pedido.setCliente((Cliente) clDao.Seleciona(Integer.parseInt(conteudo[4])));
 						pedido.setUsuario((Funcionario) fDAO.Seleciona(Integer.parseInt(conteudo[5])));
 						iniciaObjeto = false;
@@ -89,7 +84,7 @@ public class PedidoDAO extends Repositorio {
 			return pedido;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}
@@ -98,35 +93,17 @@ public class PedidoDAO extends Repositorio {
 	public void Atualiza(Object objAtualizado, int id) {
 		try {
 			Deleta(id);
+			((Pedido) objAtualizado).setId(id);
 			Insere(objAtualizado, false);
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 	}
 
-	@SuppressWarnings("deprecation")
-	private Timestamp stringToTimestamp(String string) {
-
-		String[] splittedDate = string.split(" ")[0].split("-");
-		String[] splittedTimestamp = string.split(" ")[1].split(":");
-		String[] secNano = splittedTimestamp[2].split(".");
-
-		int year = Integer.parseInt(splittedDate[0]);
-		int month = Integer.parseInt(splittedDate[1]);
-		int date = Integer.parseInt(splittedDate[2]);
-
-		int hour = Integer.parseInt(splittedTimestamp[0]);
-		int minute = Integer.parseInt(splittedTimestamp[1]);
-		int second = Integer.parseInt(secNano[0]);
-		int nano = Integer.parseInt(secNano[1]);
-
-		return new Timestamp(year, month, date, hour, minute, second, nano);
-	}
-
 	private String montaRegistro(Pedido pedido) {
 		StringBuilder strBuilder = new StringBuilder();
-
+		int k = 0;
 		for (Produto produto : pedido.getListaProdutos()) {
 			strBuilder.append(pedido.getId());
 			strBuilder.append("|");
@@ -139,7 +116,9 @@ public class PedidoDAO extends Repositorio {
 			strBuilder.append(pedido.getCliente().getId());
 			strBuilder.append("|");
 			strBuilder.append(pedido.getUsuario().getId());
-			strBuilder.append("\n");
+			k++;
+			if (k != pedido.getListaProdutos().size() - 1)
+				strBuilder.append(System.getProperty("line.separator"));
 		}
 
 		return strBuilder.toString();

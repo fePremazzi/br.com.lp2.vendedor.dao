@@ -17,11 +17,6 @@ public class ProdutoDAO extends Repositorio {
 		tablePath = "produto_table.txt";
 	}
 
-	/*
-	 * id nome private String descricao; private double valorUnit; private
-	 * TipoProduto tipoProduto;
-	 */
-
 	@Override
 	public void Insere(Object obj) throws Exception {
 		Produto produto = ((Produto) obj);
@@ -31,10 +26,10 @@ public class ProdutoDAO extends Repositorio {
 			writer.write(montaRegistro(produto));
 			writer.newLine();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public List<Object> SelecionaTodos() {
 		List<Object> allProdutos = new ArrayList<Object>();
@@ -48,11 +43,11 @@ public class ProdutoDAO extends Repositorio {
 						Double.parseDouble(conteudo[3]), TipoProduto.valueOf(conteudo[4].toUpperCase())));
 
 			}
-			
+
 			return allProdutos;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}
@@ -71,7 +66,7 @@ public class ProdutoDAO extends Repositorio {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 		return null;
@@ -113,7 +108,7 @@ public class ProdutoDAO extends Repositorio {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Nao existe produto");

@@ -1,2 +1,0 @@
-2|fellipe_admin|GERENTE|admin|admin
-3|fellipe_admin|GERENTE|master|master

@@ -27,15 +27,15 @@ public class ClienteDAO extends Repositorio {
 
 			for (String linha : allLines) {
 				String[] conteudo = linha.split("\\|");
-				allClientes.add(new Cliente(Integer.parseInt(conteudo[0]), conteudo[1],
-						new SimpleDateFormat("dd/MM/yyyy").parse(conteudo[2]), conteudo[3], conteudo[4]));
+				allClientes.add(
+						new Cliente(Integer.parseInt(conteudo[0]), conteudo[1], conteudo[2], conteudo[3], conteudo[4]));
 
 			}
-			
+
 			return allClientes;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}
@@ -49,15 +49,9 @@ public class ClienteDAO extends Repositorio {
 			writer.write(montaRegistro(cliente));
 			writer.newLine();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
-
-	/*
-	 * VO structure: private int id; (pai) private String nome; (pai) private Date
-	 * dataNascimento; private String cpf; private String endereco;
-	 * 
-	 */
 
 	@Override
 	public Object Seleciona(int id) {
@@ -65,49 +59,19 @@ public class ClienteDAO extends Repositorio {
 			List<String> allLines = getTextFromTable(tablePath);
 			for (String linha : allLines) {
 				String[] conteudo = linha.split("\\|");
-//				conteudo = linha.split("\\|");
 
 				if (Integer.parseInt(conteudo[0]) == id) {
-					return new Cliente(Integer.parseInt(conteudo[0]), conteudo[1],
-							new SimpleDateFormat("dd/MM/yyyy").parse(conteudo[2]), conteudo[3], conteudo[4]);
+					return new Cliente(Integer.parseInt(conteudo[0]), conteudo[1], conteudo[2], conteudo[3],
+							conteudo[4]);
 				}
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 		return null;
 	}
-
-//	@Override
-//	public void Deleta(int id) {
-//		List<String> escreverDeVolta = new ArrayList<String>();
-//
-//		try (BufferedWriter writer = new BufferedWriter(new FileWriter(tablePath, true));) {
-//			List<String> allLines = getTextFromTable(tablePath);
-//			for (String linha : allLines) {
-//				String[] conteudo = linha.split("\\|");
-////				conteudo = linha.split("\\|");
-//
-//				if (!(Integer.parseInt(conteudo[0]) == id)) {
-//					escreverDeVolta.add(linha);
-//				}
-//			}
-//
-//			clearTheFile(tablePath);
-//
-//			if (escreverDeVolta != null) {
-//				for (String string : escreverDeVolta) {
-//					writer.write(string);
-//					writer.newLine();
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
 
 	@Override
 	public void Atualiza(Object objAtualizado, int id) {
@@ -124,12 +88,12 @@ public class ClienteDAO extends Repositorio {
 				for (String linha : allLines) {
 					String[] conteudo = linha.split("\\|");
 					linha.split("\\|");
-//					conteudo = linha.split("\\|");
 
-					Cliente clLinha = new Cliente(Integer.parseInt(conteudo[0]), conteudo[1],
-							new SimpleDateFormat("dd/MM/yyyy").parse(conteudo[2]), conteudo[3], conteudo[4]);
+					Cliente clLinha = new Cliente(Integer.parseInt(conteudo[0]), conteudo[1], conteudo[2], conteudo[3],
+							conteudo[4]);
 
 					if (clLinha.getId() == clBanco.getId()) {
+						clNovosDados.setId(id);
 						escreverDeVolta.add(montaRegistro(clNovosDados));
 					} else {
 						escreverDeVolta.add(montaRegistro(clLinha));
@@ -145,7 +109,7 @@ public class ClienteDAO extends Repositorio {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Nao existe Cliente com o Id fornecido");

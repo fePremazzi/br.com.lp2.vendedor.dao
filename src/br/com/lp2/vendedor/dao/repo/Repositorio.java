@@ -16,13 +16,14 @@ import br.com.lp2.vendedor.comum.VO.Funcionario;
 public abstract class Repositorio {
 
 	protected String tablePath;
-	
 
 	public abstract void Insere(Object obj) throws Exception;
+
 	public abstract Object Seleciona(int id);
+
 	public abstract List<Object> SelecionaTodos();
+
 	public abstract void Atualiza(Object objAtualizado, int id);
-	
 
 	public void Deleta(int id) {
 		List<String> escreverDeVolta = new ArrayList<String>();
@@ -60,7 +61,8 @@ public abstract class Repositorio {
 			for (String registro : allLines) {
 				String[] linha = registro.split("\\|");
 //				linha = registro.split("\\|");
-				if (Integer.parseInt(linha[0]) >= proximoId)
+				if (registro.equals("")) {
+				} else if (Integer.parseInt(linha[0]) >= proximoId)
 					proximoId = Integer.parseInt(linha[0]);
 			}
 		} catch (Exception e) {
